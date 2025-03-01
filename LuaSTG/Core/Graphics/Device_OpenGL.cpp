@@ -251,6 +251,7 @@ namespace Core::Graphics
 	void Texture2D_OpenGL::onDeviceDestroy()
 	{
 		glDeleteTextures(1, &opengl_texture2d);
+		opengl_texture2d = 0;
 	}
 
 	bool Texture2D_OpenGL::createResource()
@@ -398,6 +399,9 @@ namespace Core::Graphics
 
 	bool RenderTarget_OpenGL::setSize(Vector2U size)
 	{
+		glDeleteFramebuffers(1, &opengl_framebuffer);
+		opengl_framebuffer = 0;
+		if (!m_depthstencilbuffer->setSize(size)) return false;
 		if (!m_texture->setSize(size)) return false;
 		return createResource();
 	}
@@ -409,6 +413,9 @@ namespace Core::Graphics
 	}
 	void RenderTarget_OpenGL::onDeviceDestroy()
 	{
+		glDeleteFramebuffers(1, &opengl_framebuffer);
+		opengl_framebuffer = 0;
+		m_depthstencilbuffer->onDeviceDestroy();
 		m_texture->onDeviceDestroy();
 	}
 
@@ -455,6 +462,7 @@ namespace Core::Graphics
 	bool DepthStencilBuffer_OpenGL::setSize(Vector2U size)
 	{
 		glDeleteRenderbuffers(1, &opengl_depthstencilbuffer);
+		opengl_depthstencilbuffer = 0;
 		m_size = size;
 		return createResource();
 	}
@@ -466,6 +474,7 @@ namespace Core::Graphics
 	void DepthStencilBuffer_OpenGL::onDeviceDestroy()
 	{
 		glDeleteRenderbuffers(1, &opengl_depthstencilbuffer);
+		opengl_depthstencilbuffer = 0;
 	}
 
 	bool DepthStencilBuffer_OpenGL::createResource()

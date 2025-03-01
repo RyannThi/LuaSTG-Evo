@@ -29,7 +29,7 @@ namespace LuaSTGPlus
     }
     bool ResourceMusicImpl::IsPlaying() { return m_player->isPlaying(); }
     bool ResourceMusicImpl::IsPaused() { return m_status == 1; }
-    bool ResourceMusicImpl::IsStopped() { return !IsPlaying() && m_player->getTotalTime() == 0.0; }
+    bool ResourceMusicImpl::IsStopped() { return m_status == 0; }
     void ResourceMusicImpl::SetVolume(float v) { m_player->setVolume(v); }
     float ResourceMusicImpl::GetVolume() { return m_player->getVolume(); }
     bool ResourceMusicImpl::SetSpeed(float speed) { return m_player->setSpeed(speed); }
